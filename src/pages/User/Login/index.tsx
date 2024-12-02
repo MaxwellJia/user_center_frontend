@@ -1,22 +1,16 @@
 import { Footer } from '@/components';
 import { login } from '@/services/ant-design-pro/api';
-import { getFakeCaptcha } from '@/services/ant-design-pro/login';
 import {
-  AlipayCircleOutlined,
   LockOutlined,
-  MobileOutlined,
-  TaobaoCircleOutlined,
   UserOutlined,
-  WeiboCircleOutlined,
 } from '@ant-design/icons';
 import {
   LoginForm,
-  ProFormCaptcha,
   ProFormCheckbox,
   ProFormText,
 } from '@ant-design/pro-components';
-import { FormattedMessage, history, SelectLang, useIntl, useModel, Helmet } from '@umijs/max';
-import { Alert, message, Tabs } from 'antd';
+import {history, SelectLang, useIntl, useModel, Helmet, Link} from '@umijs/max';
+import {Alert, Divider, message, Space, Tabs} from 'antd';
 import Settings from '../../../../config/defaultSettings';
 import React, { useState } from 'react';
 import { flushSync } from 'react-dom';
@@ -58,18 +52,6 @@ const useStyles = createStyles(({ token }) => {
     },
   };
 });
-
-const ActionIcons = () => {
-  const { styles } = useStyles();
-
-  return (
-    <>
-      <AlipayCircleOutlined key="AlipayCircleOutlined" className={styles.action} />
-      <TaobaoCircleOutlined key="TaobaoCircleOutlined" className={styles.action} />
-      <WeiboCircleOutlined key="WeiboCircleOutlined" className={styles.action} />
-    </>
-  );
-};
 
 const Lang = () => {
   const { styles } = useStyles();
@@ -118,21 +100,21 @@ const Login: React.FC = () => {
   const handleSubmit = async (values: API.LoginParams) => {
     try {
       // 登录
-      const msg = await login({ ...values, type });
-      if (msg.status === 'ok') {
+      const user = await login({ ...values, type });
+      if (user) {
         const defaultLoginSuccessMessage = intl.formatMessage({
           id: 'pages.login.success',
-          defaultMessage: '登录成功！',
+          defaultMessage: 'Login successfully！',
         });
         message.success(defaultLoginSuccessMessage);
         await fetchUserInfo();
         const urlParams = new URL(window.location.href).searchParams;
-        history.push(urlParams.get('redirect') || '/');
+        setTimeout(() => history.push(urlParams.get('redirect') || '/'), 1000);
         return;
       }
-      console.log(msg);
-      // 如果失败去设置用户错误信息
-      setUserLoginState(msg);
+      console.log(user);
+      // // 如果失败去设置用户错误信息
+      setUserLoginState(user);
     } catch (error) {
       const defaultLoginFailureMessage = intl.formatMessage({
         id: 'pages.login.failure',
@@ -150,7 +132,7 @@ const Login: React.FC = () => {
         <title>
           {intl.formatMessage({
             id: 'menu.login',
-            defaultMessage: '登录页',
+            defaultMessage: 'Login Page',
           })}
           - {Settings.title}
         </title>
@@ -184,10 +166,8 @@ const Login: React.FC = () => {
             items={[
               {
                 key: 'account',
-                label: intl.formatMessage({
-                  id: 'pages.login.accountLogin.tab',
-                  defaultMessage: '账户密码登录',
-                }),
+                label: 'Login'
+                ,
               },
             ]}
           />
@@ -196,53 +176,50 @@ const Login: React.FC = () => {
             <LoginMessage
               content={intl.formatMessage({
                 id: 'pages.login.accountLogin.errorMessage',
-                defaultMessage: 'Wrong username or password',
+                defaultMessage: 'Wrong user account or password',
               })}
             />
           )}
           {type === 'account' && (
             <>
               <ProFormText
-                name="username"
+                name="userAccount"
                 fieldProps={{
                   size: 'large',
                   prefix: <UserOutlined />,
                 }}
-                placeholder={intl.formatMessage({
-                  id: 'pages.login.username.placeholder',
-                  defaultMessage: 'Please enter Username',
-                })}
+                placeholder={
+                  'Please enter user account'
+                }
                 rules={[
                   {
                     required: true,
                     message: (
-                      <FormattedMessage
-                        id="pages.login.username.required"
-                        defaultMessage="请输入Username!"
-                      />
+                        "Please enter user account!"
                     ),
                   },
                 ]}
               />
               <ProFormText.Password
-                name="password"
+                name="userPassword"
                 fieldProps={{
                   size: 'large',
                   prefix: <LockOutlined />,
                 }}
-                placeholder={intl.formatMessage({
-                  id: 'pages.login.password.placeholder',
-                  defaultMessage: 'Please enter password',
-                })}
+                placeholder={
+                  'Please enter password'
+                }
                 rules={[
                   {
                     required: true,
                     message: (
-                      <FormattedMessage
-                        id="pages.login.password.required"
-                        defaultMessage="请输入密码！"
-                      />
+                      "Please enter the password！"
                     ),
+                  },
+                  {
+                    min: 8,
+                    type: 'string',
+                    message:'The length of password should be more than 8'
                   },
                 ]}
               />
@@ -253,9 +230,12 @@ const Login: React.FC = () => {
               marginBottom: 24,
             }}
           >
-            <ProFormCheckbox noStyle name="autoLogin">
-              <FormattedMessage id="pages.login.rememberMe" defaultMessage="自动登录" />
-            </ProFormCheckbox>
+            <Space split={<Divider type="vertical"/>}>
+              <ProFormCheckbox noStyle name="autoLogin">
+                Remember me
+              </ProFormCheckbox>
+              <Link to={"/user/register"}>Register</Link>
+            </Space>
             <a
               style={{
                 float: 'right',
@@ -264,12 +244,13 @@ const Login: React.FC = () => {
               target="_blank"
               rel="noreferrer"
             >
-              <FormattedMessage id="pages.login.forgotPassword" defaultMessage="Forget password?Please contact the administrator" />
+              Forget password?
             </a>
+
           </div>
         </LoginForm>
       </div>
-      <Footer />
+      <Footer/>
     </div>
   );
 };

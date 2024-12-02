@@ -20,6 +20,11 @@ export default [
         path: '/user/login',
         component: './User/Login',
       },
+      {
+        name: 'register',
+        path: '/user/register',
+        component: './User/Register',
+      },
     ],
   },
   {
@@ -39,9 +44,9 @@ export default [
         redirect: '/admin/sub-page',
       },
       {
-        path: '/admin/sub-page',
-        name: 'sub-page',
-        component: './Admin',
+        path: '/admin/user-manage',
+        name: 'user-manage',
+        component: './Admin/UserManage',
       },
     ],
   },

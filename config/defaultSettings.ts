@@ -1,4 +1,5 @@
 import { ProLayoutProps } from '@ant-design/pro-components';
+import {SYSTEM_LOGO} from "@/constant";
 
 /**
  * @name
@@ -15,7 +16,7 @@ const Settings: ProLayoutProps & {
   fixedHeader: false,
   fixSiderbar: true,
   colorWeak: false,
-  title: 'Ant Design Pro',
+  title: 'Cam Fall',
   pwa: true,
   logo: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
   iconfontUrl: '',

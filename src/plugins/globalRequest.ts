@@ -6,6 +6,7 @@ import {history} from "@@/core/history";
 
 const request = extend({
   credentials:'include',
+  prefix: process.env.NODE_ENV === 'production' ? 'http://localhost:3000' : undefined,
   // requestType: form,
 });
 

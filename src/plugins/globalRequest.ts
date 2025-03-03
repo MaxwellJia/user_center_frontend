@@ -6,7 +6,7 @@ import {history} from "@@/core/history";
 
 const request = extend({
   credentials:'include',
-  prefix: process.env.NODE_ENV === 'production' ? 'https://usercenter-ahfugpghdgcga6hy.australiaeast-01.azurewebsites.net/' : undefined,
+  prefix: process.env.NODE_ENV === 'production' ? 'https://usercenter-ahfugpghdgcga6hy.australiaeast-01.azurewebsites.net' : undefined,
   // requestType: form,
 });
 

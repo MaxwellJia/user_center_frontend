@@ -34,12 +34,12 @@ request.interceptors.response.use(async (response,options): Promise<any> => {
 
   if(res.code === 40100){
     message.error('Please log in first');
-    history.replace({
-      pathname: '/user/login',
-      search:stringify({
-        redirect: location.pathname,
-      }),
-    });
+    // history.replace({
+    //   pathname: '/user/login',
+    //   search:stringify({
+    //     redirect: location.pathname,
+    //   }),
+    // });
   }else {
     message.error(res.description);
   }

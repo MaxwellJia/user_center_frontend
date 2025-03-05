@@ -56,7 +56,7 @@ export async function getInitialState(): Promise<{
       });
       return user;
     } catch (error) {
-      history.push(loginPath);
+      // history.push(loginPath);
     }
     return undefined;
   };
@@ -100,9 +100,9 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
         return;
       }
       // 如果没有登录，重定向到 login
-      // if (!initialState?.currentUser) {
-      //   history.push(loginPath);
-      // }
+      if (!initialState?.currentUser) {
+        history.push(loginPath);
+      }
     },
     bgLayoutImgList: [
       {

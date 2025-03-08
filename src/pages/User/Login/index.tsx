@@ -1,22 +1,14 @@
 import { Footer } from '@/components';
+import { MAX_GITHUB, MAX_LINKEDIN, SYSTEM_LOGO } from '@/constant';
 import { login } from '@/services/ant-design-pro/api';
-import {
-  LockOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
-import {
-  LoginForm,
-  ProFormCheckbox,
-  ProFormText,
-} from '@ant-design/pro-components';
-import {history, SelectLang, useIntl, useModel, Helmet, Link} from '@umijs/max';
-import {Alert, Divider, message, Space, Tabs} from 'antd';
-import Settings from '../../../../config/defaultSettings';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { LoginForm, ProFormCheckbox, ProFormText } from '@ant-design/pro-components';
+import { Helmet, history, Link, useModel } from '@umijs/max';
+import { Alert, Divider, message, Space, Tabs } from 'antd';
+import { createStyles } from 'antd-style';
 import React, { useState } from 'react';
 import { flushSync } from 'react-dom';
-import { createStyles } from 'antd-style';
-import {MAX_GITHUB, MAX_LINKEDIN, SYSTEM_LOGO} from "@/constant";
-
+import Settings from '../../../../config/defaultSettings';
 const useStyles = createStyles(({ token }) => {
   return {
     action: {
@@ -52,17 +44,10 @@ const useStyles = createStyles(({ token }) => {
     },
   };
 });
-
 const Lang = () => {
   const { styles } = useStyles();
-
-  return (
-    <div className={styles.lang} data-lang>
-      {SelectLang && <SelectLang />}
-    </div>
-  );
+  return;
 };
-
 const LoginMessage: React.FC<{
   content: string;
 }> = ({ content }) => {
@@ -77,14 +62,11 @@ const LoginMessage: React.FC<{
     />
   );
 };
-
 const Login: React.FC = () => {
   const [userLoginState, setUserLoginState] = useState<API.LoginResult>({});
   const [type, setType] = useState<string>('account');
   const { initialState, setInitialState } = useModel('@@initialState');
   const { styles } = useStyles();
-  const intl = useIntl();
-
   const fetchUserInfo = async () => {
     const userInfo = await initialState?.fetchUserInfo?.();
     if (userInfo) {
@@ -96,16 +78,15 @@ const Login: React.FC = () => {
       });
     }
   };
-
   const handleSubmit = async (values: API.LoginParams) => {
     try {
       // 登录
-      const user = await login({ ...values, type });
+      const user = await login({
+        ...values,
+        type,
+      });
       if (user) {
-        const defaultLoginSuccessMessage = intl.formatMessage({
-          id: 'pages.login.success',
-          defaultMessage: 'Login successfully！',
-        });
+        const defaultLoginSuccessMessage = '登录成功！';
         message.success(defaultLoginSuccessMessage);
         await fetchUserInfo();
         const urlParams = new URL(window.location.href).searchParams;
@@ -116,25 +97,17 @@ const Login: React.FC = () => {
       // // 如果失败去设置用户错误信息
       // setUserLoginState(user);
     } catch (error) {
-      const defaultLoginFailureMessage = intl.formatMessage({
-        id: 'pages.login.failure',
-        defaultMessage: '登录失败，请重试！',
-      });
+      const defaultLoginFailureMessage = '登录失败，请重试！';
       console.log(error);
       message.error(defaultLoginFailureMessage);
     }
   };
   const { status, type: loginType } = userLoginState;
-
   return (
     <div className={styles.container}>
       <Helmet>
         <title>
-          {intl.formatMessage({
-            id: 'menu.login',
-            defaultMessage: 'Login Page',
-          })}
-          - {Settings.title}
+          {'登录'}- {Settings.title}
         </title>
       </Helmet>
       <Lang />
@@ -151,7 +124,11 @@ const Login: React.FC = () => {
           }}
           logo={<img alt="logo" src={SYSTEM_LOGO} />}
           title="Cam Fall"
-          subTitle={<a href={MAX_GITHUB} target="_blank" rel="noreferrer">All the best for vulnerable people</a>}
+          subTitle={
+            <a href={MAX_GITHUB} target="_blank" rel="noreferrer">
+              All the best for vulnerable people
+            </a>
+          }
           initialValues={{
             autoLogin: true,
           }}
@@ -166,19 +143,13 @@ const Login: React.FC = () => {
             items={[
               {
                 key: 'account',
-                label: 'Login'
-                ,
+                label: 'Login',
               },
             ]}
           />
 
           {status === 'error' && loginType === 'account' && (
-            <LoginMessage
-              content={intl.formatMessage({
-                id: 'pages.login.accountLogin.errorMessage',
-                defaultMessage: 'Wrong user account or password',
-              })}
-            />
+            <LoginMessage content={'错误的用户名和密码(admin/ant.design)'} />
           )}
           {type === 'account' && (
             <>
@@ -188,15 +159,11 @@ const Login: React.FC = () => {
                   size: 'large',
                   prefix: <UserOutlined />,
                 }}
-                placeholder={
-                  'Please enter user account'
-                }
+                placeholder={'Please enter user account'}
                 rules={[
                   {
                     required: true,
-                    message: (
-                        "Please enter user account!"
-                    ),
+                    message: 'Please enter user account!',
                   },
                 ]}
               />
@@ -206,20 +173,16 @@ const Login: React.FC = () => {
                   size: 'large',
                   prefix: <LockOutlined />,
                 }}
-                placeholder={
-                  'Please enter password'
-                }
+                placeholder={'Please enter password'}
                 rules={[
                   {
                     required: true,
-                    message: (
-                      "Please enter the password！"
-                    ),
+                    message: 'Please enter the password！',
                   },
                   {
                     min: 8,
                     type: 'string',
-                    message:'The length of password should be more than 8'
+                    message: 'The length of password should be more than 8',
                   },
                 ]}
               />
@@ -230,11 +193,11 @@ const Login: React.FC = () => {
               marginBottom: 24,
             }}
           >
-            <Space split={<Divider type="vertical"/>}>
+            <Space split={<Divider type="vertical" />}>
               <ProFormCheckbox noStyle name="autoLogin">
                 Remember me
               </ProFormCheckbox>
-              <Link to={"/user/register"}>Register</Link>
+              <Link to={'/user/register'}>Register</Link>
             </Space>
             <a
               style={{
@@ -246,13 +209,11 @@ const Login: React.FC = () => {
             >
               Forget password?
             </a>
-
           </div>
         </LoginForm>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };
-
 export default Login;

@@ -1,14 +1,13 @@
-import {Footer} from '@/components';
-import {register} from '@/services/ant-design-pro/api';
-import {LockOutlined, UserOutlined,} from '@ant-design/icons';
-import {LoginForm, ProFormText,} from '@ant-design/pro-components';
-import {Helmet, history, Link, SelectLang, useIntl} from '@umijs/max';
-import {Divider, message, Tabs} from 'antd';
+import { Footer } from '@/components';
+import { MAX_GITHUB, SYSTEM_LOGO } from '@/constant';
+import { register } from '@/services/ant-design-pro/api';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { LoginForm, ProFormText } from '@ant-design/pro-components';
+import { Helmet, history, Link } from '@umijs/max';
+import { Divider, message, Tabs } from 'antd';
+import { createStyles } from 'antd-style';
+import React, { useState } from 'react';
 import Settings from '../../../../config/defaultSettings';
-import React, {useState} from 'react';
-import {createStyles} from 'antd-style';
-import {MAX_GITHUB, SYSTEM_LOGO} from "@/constant";
-
 const useStyles = createStyles(({ token }) => {
   return {
     action: {
@@ -44,30 +43,20 @@ const useStyles = createStyles(({ token }) => {
     },
   };
 });
-
 const Lang = () => {
   const { styles } = useStyles();
-
-  return (
-    <div className={styles.lang} data-lang>
-      {SelectLang && <SelectLang />}
-    </div>
-  );
+  return;
 };
-
 const Register: React.FC = () => {
   const [type, setType] = useState<string>('account');
   const { styles } = useStyles();
-  const intl = useIntl();
-
   const handleSubmit = async (values: API.RegisterParams) => {
-    const{ userPassword, checkPassword} = values;
+    const { userPassword, checkPassword } = values;
     //校验
-    if (userPassword !== checkPassword){
+    if (userPassword !== checkPassword) {
       message.error('The two passwords you entered are inconsistent.');
       return;
     }
-
     try {
       // 注册
       const id = await register(values);
@@ -77,8 +66,8 @@ const Register: React.FC = () => {
         const urlParams = new URL(window.location.href).searchParams;
         history.push({
           pathname: '/user/login',
-          search:urlParams.toString(),
-          });
+          search: urlParams.toString(),
+        });
         return;
       }
     } catch (error: any) {
@@ -87,14 +76,11 @@ const Register: React.FC = () => {
       message.error(error.message ?? defaultLoginFailureMessage);
     }
   };
-
   return (
     <div className={styles.container}>
       <Helmet>
         <title>
-          {'Registration Page'
-          }
-          - {Settings.title}
+          {'Registration Page'}- {Settings.title}
         </title>
       </Helmet>
       <Lang />
@@ -106,18 +92,21 @@ const Register: React.FC = () => {
       >
         <LoginForm
           submitter={{
-           searchConfig: {
-             submitText:'Register'
-           }
-          }
-          }
+            searchConfig: {
+              submitText: 'Register',
+            },
+          }}
           contentStyle={{
             minWidth: 280,
             maxWidth: '75vw',
           }}
           logo={<img alt="logo" src={SYSTEM_LOGO} />}
           title="Cam Fall"
-          subTitle={<a href={MAX_GITHUB} target="_blank" rel="noreferrer">All the best for vulnerable people</a>}
+          subTitle={
+            <a href={MAX_GITHUB} target="_blank" rel="noreferrer">
+              All the best for vulnerable people
+            </a>
+          }
           initialValues={{
             autoLogin: true,
           }}
@@ -149,7 +138,7 @@ const Register: React.FC = () => {
                 rules={[
                   {
                     required: true,
-                    message: ("Please enter user account!"),
+                    message: 'Please enter user account!',
                   },
                 ]}
               />
@@ -163,12 +152,12 @@ const Register: React.FC = () => {
                 rules={[
                   {
                     required: true,
-                    message: ("Please Enter the Password"),
+                    message: 'Please Enter the Password',
                   },
                   {
                     min: 8,
                     type: 'string',
-                    message:'The length of password should be more than 8'
+                    message: 'The length of password should be more than 8',
                   },
                 ]}
               />
@@ -182,13 +171,12 @@ const Register: React.FC = () => {
                 rules={[
                   {
                     required: true,
-                    message: ("Check Password is required."
-                    ),
+                    message: 'Check Password is required.',
                   },
                   {
                     min: 8,
                     type: 'string',
-                    message:'The length of password should be more than 8'
+                    message: 'The length of password should be more than 8',
                   },
                 ]}
               />
@@ -198,27 +186,23 @@ const Register: React.FC = () => {
                   size: 'large',
                   prefix: <LockOutlined />,
                 }}
-                placeholder={
-                  'Please enter the security code'
-                }
+                placeholder={'Please enter the security code'}
                 rules={[
                   {
                     required: true,
-                    message: (
-                        "Security code is required"
-                    ),
+                    message: 'Security code is required',
                   },
                   {
                     max: 5,
                     type: 'string',
-                    message:'The length of password should be less than 5'
+                    message: 'The length of password should be less than 5',
                   },
                 ]}
               />
             </>
           )}
           <Divider plain={true}>
-            <Link to={"/user/login"}>Back to login page</Link>
+            <Link to={'/user/login'}>Back to login page</Link>
           </Divider>
         </LoginForm>
       </div>
@@ -226,5 +210,4 @@ const Register: React.FC = () => {
     </div>
   );
 };
-
 export default Register;

@@ -31,6 +31,9 @@ const columns: ProColumns<API.CurrentUser>[] = [
     dataIndex: 'id',
     valueType: 'indexBorder',
     width: 48,
+    fieldProps:{
+      placeholder: ''
+    }
   },
   {
     title: 'User Name',

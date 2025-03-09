@@ -164,7 +164,7 @@ const Login: React.FC = () => {
                   size: 'large',
                   prefix: <UserOutlined />,
                 }}
-                placeholder={'Please enter user account'}
+                placeholder={'Account: Maxwell'}
                 rules={[
                   {
                     required: true,
@@ -178,7 +178,7 @@ const Login: React.FC = () => {
                   size: 'large',
                   prefix: <LockOutlined />,
                 }}
-                placeholder={'Please enter password'}
+                placeholder={'Password: 12345678'}
                 rules={[
                   {
                     required: true,

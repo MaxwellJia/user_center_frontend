@@ -124,10 +124,23 @@ const Welcome: React.FC = () => {
               width: '65%',
             }}
           >
-            Cam fall is a system that helps cameras to detect whether there are people who has fallen down around based on video and audio AI models.
-            Emails will be sent to caregivers if there are some people fallen down. The applied situations are hospitals and retirement villages.
-            Please check <a href={"https://sites.google.com/view/camfall/home"}>Cam Fall Project</a> for more information. This website is used to manage
-            users of cam fall.
+            <p>
+              User Centre is a powerful system designed to help enterprises manage their users efficiently and
+              effortlessly.
+            </p>
+
+            <p>
+              With this web platform, you can easily modify user information in just a few clicks. Built with
+              <strong> Ant Design Pro (React-based)</strong> for the frontend,
+              <strong> Spring Boot</strong> for the backend,
+              <strong> MySQL</strong> for data management, and
+              <strong> Azure</strong> for cloud hosting, the system ensures a seamless and secure user experience.
+            </p>
+
+            <p>
+              Note: Since this platform relies on cookies for frontend-backend communication, please
+              <strong> disable "Prevent Tracking"</strong> in your browser settings for optimal functionality.
+            </p>
           </p>
           <div
             style={{
@@ -144,7 +157,7 @@ const Welcome: React.FC = () => {
             <InfoCard
               index={2}
               title="User"
-              desc="If you are users, we will connect our systems to this web pages later, please stay tuned."
+              desc="If you are logged in as an administrator, you can manage the generated example users by clicking on the 'Admin Page' in the left sidebar."
             />
             <InfoCard
               index={3}

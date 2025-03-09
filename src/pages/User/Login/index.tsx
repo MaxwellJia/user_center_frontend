@@ -86,7 +86,7 @@ const Login: React.FC = () => {
         type,
       });
       if (user) {
-        const defaultLoginSuccessMessage = '登录成功！';
+        const defaultLoginSuccessMessage = 'Login successful!';
         message.success(defaultLoginSuccessMessage);
         await fetchUserInfo();
         const urlParams = new URL(window.location.href).searchParams;
@@ -97,7 +97,7 @@ const Login: React.FC = () => {
       // // 如果失败去设置用户错误信息
       // setUserLoginState(user);
     } catch (error) {
-      const defaultLoginFailureMessage = '登录失败，请重试！';
+      const defaultLoginFailureMessage = 'Login failed, please try again!';
       console.log(error);
       message.error(defaultLoginFailureMessage);
     }
@@ -107,7 +107,7 @@ const Login: React.FC = () => {
     <div className={styles.container}>
       <Helmet>
         <title>
-          {'登录'}- {Settings.title}
+          {'Login'}- {Settings.title}
         </title>
       </Helmet>
       <Lang />
@@ -118,15 +118,20 @@ const Login: React.FC = () => {
         }}
       >
         <LoginForm
+          submitter={{
+            searchConfig: {
+              submitText: 'Login', // 修改按钮文本
+            },
+          }}
           contentStyle={{
             minWidth: 280,
             maxWidth: '75vw',
           }}
           logo={<img alt="logo" src={SYSTEM_LOGO} />}
-          title="Cam Fall"
+          title="User Centre"
           subTitle={
             <a href={MAX_GITHUB} target="_blank" rel="noreferrer">
-              All the best for vulnerable people
+              All the best for user management
             </a>
           }
           initialValues={{
@@ -149,7 +154,7 @@ const Login: React.FC = () => {
           />
 
           {status === 'error' && loginType === 'account' && (
-            <LoginMessage content={'错误的用户名和密码(admin/ant.design)'} />
+            <LoginMessage content={'Incorrect username and password(admin/ant.design)'} />
           )}
           {type === 'account' && (
             <>

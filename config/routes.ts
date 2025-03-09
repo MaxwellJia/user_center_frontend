@@ -1,24 +1,29 @@
 export default [
+  { path: '/', redirect: '/welcome' }, // 确保 `/` 直接跳转
+  { path: '/welcome', name: 'Welcome', icon: 'smile', component: './Welcome' },
+
   {
     path: '/user',
     layout: false,
     routes: [
-      { name: '登录', path: '/user/login', component: './User/Login' },
-      { name: '注册', path: '/user/register', component: './User/Register' },
+      { name: 'Login', path: '/user/login', component: './User/Login' },
+      { name: 'Register', path: '/user/register', component: './User/Register' },
     ],
   },
-  { path: '/welcome', name: '欢迎', icon: 'smile', component: './Welcome' },
+
   {
     path: '/admin',
-    name: '管理页',
+    name: 'Admin Page',
     icon: 'crown',
     access: 'canAdmin',
+    component: './Admin',
     routes: [
-      { path: '/admin', redirect: '/admin/sub-page' },
-      { path: '/admin/user-manage', component: './Admin/UserManage' },
+      { path: '/admin/user-manage', name: 'User Management', icon: 'smile', component: './Admin/UserManage' },
+      { path: '*', component: './404' }, // 确保 404 规则生效
     ],
   },
-  { name: '查询表格', icon: 'table', path: '/list', component: './TableList' },
-  { path: '/', redirect: '/welcome' },
-  { path: '*', layout: false, component: './404' },
+
+  // { name: 'Enquiry Form', icon: 'table', path: '/list', component: './TableList' },
+  { path: '*', layout: false, component: './404' }, // 全局 404 处理放在最后
 ];
+

@@ -7,6 +7,7 @@ import { history, Link, RequestConfig, RunTimeLayoutConfig } from '@umijs/max';
 import defaultSettings from '../config/defaultSettings';
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
+
 /**
  * 无需用户登录态的页面
  */
@@ -120,10 +121,6 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     ],
     links: isDev
       ? [
-          <Link key="openapi" to="/umi/plugin/openapi" target="_blank">
-            <LinkOutlined />
-            <span>OpenAPI 文档</span>
-          </Link>,
         ]
       : [],
     menuHeaderRender: undefined,
@@ -131,7 +128,8 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     // unAccessible: <div>unAccessible</div>,
     // 增加一个 loading 的状态
     childrenRender: (children) => {
-      // if (initialState?.loading) return <PageLoading />;
+      // if (initialState?.loading) return <PageLoading tip={"Loading..."} />;
+      // if (initialState?.loading) return <PageLoading tip="Loading resources, please wait..." />;
       return (
         <>
           {children}

@@ -6,13 +6,14 @@
 // };
 //
 // export default Admin;
-import type {ActionType, ProColumns} from '@ant-design/pro-components';
+import {ActionType, ProColumns, ProProvider} from '@ant-design/pro-components';
+import { createIntl } from '@ant-design/pro-provider';
 import {ProTable} from '@ant-design/pro-components';
 import {useRef} from 'react';
 import {deleteUser, searchUsers, update} from "@/services/ant-design-pro/api";
 import {Image, message} from "antd";
 import enUS from 'antd/lib/locale/en_US'; // 引入英文语言包
-import { ConfigProvider } from 'antd';
+import React, { useContext } from 'react';
 
 export const waitTimePromise = async (time: number = 100) => {
   return new Promise((resolve) => {
@@ -181,11 +182,50 @@ const columns: ProColumns<API.CurrentUser>[] = [
   },
 ];
 
+
+
+
 export default () => {
+  const enLocale = {
+    tableForm: {
+      search: 'Query',
+      reset: 'Reset',
+      submit: 'Submit',
+      collapsed: 'Expand',
+      expand: 'Collapse',
+      inputPlaceholder: 'Please enter',
+      selectPlaceholder: 'Please select',
+    },
+    alert: {
+      clear: 'Clear',
+    },
+    tableToolBar: {
+      leftPin: 'Pin to left',
+      rightPin: 'Pin to right',
+      noPin: 'Unpinned',
+      leftFixedTitle: 'Fixed the left',
+      rightFixedTitle: 'Fixed the right',
+      noFixedTitle: 'Not Fixed',
+      reset: 'Reset',
+      columnDisplay: 'Column Display',
+      columnSetting: 'Settings',
+      fullScreen: 'Full Screen',
+      exitFullScreen: 'Exit Full Screen',
+      reload: 'Refresh',
+      density: 'Density',
+      densityDefault: 'Default',
+      densityLarger: 'Larger',
+      densityMiddle: 'Middle',
+      densitySmall: 'Compact',
+    },
+  };
+
   const actionRef = useRef<ActionType>();
+  const enUSIntl = createIntl('en_US', enLocale);
+  const values = useContext(ProProvider);
   return (
 
-    <ConfigProvider locale={enUS}>
+    <ProProvider.Provider value={{ ...values, intl: enUSIntl }}>
     <ProTable<API.CurrentUser>
       columns={columns}
       actionRef={actionRef}
@@ -226,28 +266,6 @@ export default () => {
       }}
       rowKey="id"
 
-      column={{
-        search: {
-          fieldProps: {
-            placeholder: '', // 关闭提示词
-          },
-      }}}
-
-      search={{
-        labelWidth: 'auto',
-        resetText: 'Reset',    // 修改重置按钮文本
-        searchText: 'Search',
-        collapseRender: (collapsed) => (
-          <a>{collapsed ? 'Show Filters' : 'Hide Filters'}</a>  // 折叠按钮文本设置为英文
-        ),
-      }}
-
-      locale={{
-        emptyText: 'No data',        // 修改空数据提示文本
-        filterConfirm: 'Confirm',    // 修改筛选确认按钮文本
-        filterReset: 'Reset',        // 修改筛选重置按钮文本
-        selectAll: 'Select all',     // 修改选择全部按钮文本
-      }}
       options={{
         setting: {
           listsHeight: 400,
@@ -272,6 +290,6 @@ export default () => {
       }}
       dateFormatter="string"
       headerTitle="User Management"></ProTable>
-    </ConfigProvider>
+    </ProProvider.Provider>
   );
 };

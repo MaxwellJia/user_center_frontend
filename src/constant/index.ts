@@ -1,5 +1,5 @@
 
-export const SYSTEM_LOGO = "https://github.com/MaxwellJia/filesSaver/blob/main/cam_fall.PNG?raw=true";
+export const SYSTEM_LOGO = "https://github.com/MaxwellJia/filesSaver/blob/main/UserCentre.PNG?raw=true";
 
 export const MAX_GITHUB = "https://github.com/MaxwellJia?tab=repositories";
 

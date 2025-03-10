@@ -195,7 +195,7 @@ const Register: React.FC = () => {
                   {
                     max: 5,
                     type: 'string',
-                    message: 'The length of password should be less than 5',
+                    message: 'The length of security code should be less than 5',
                   },
                 ]}
               />

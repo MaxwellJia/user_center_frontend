@@ -112,7 +112,7 @@ const Welcome: React.FC = () => {
               color: token.colorTextHeading,
             }}
           >
-            Welcome to Cam Fall User Management Page
+            Welcome to User Centre Page
           </div>
           <p
             style={{
@@ -162,7 +162,7 @@ const Welcome: React.FC = () => {
             <InfoCard
               index={3}
               title="Bugs or problems"
-              desc="If you meet any bugs or problems, please feel free to let me know, LinkedIn or GitHub below."
+              desc="If you encounter any bugs or problems, please let me know. My LinkedIn and GitHub are as below."
             />
           </div>
         </div>

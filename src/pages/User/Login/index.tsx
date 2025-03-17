@@ -134,6 +134,7 @@ const Login: React.FC = () => {
               All the best for user management
             </a>
           }
+
           initialValues={{
             autoLogin: true,
           }}
@@ -141,6 +142,20 @@ const Login: React.FC = () => {
             await handleSubmit(values as API.LoginParams);
           }}
         >
+
+
+          <div
+            style={{
+              color: '#1890ff', // 蓝色 (Ant Design 默认蓝)
+              textAlign: 'center', // 居中
+              fontWeight: 'bold', // 加粗（可选）
+              fontSize: '16px', // 字体大小（可选）
+              marginTop: '20px', // 上边距（可选）
+            }}
+          >
+            Please log in via computer or disable "Prevent Tracking" in your browser.
+          </div>
+
           <Tabs
             activeKey={type}
             onChange={setType}
@@ -158,11 +173,12 @@ const Login: React.FC = () => {
           )}
           {type === 'account' && (
             <>
+
               <ProFormText
                 name="userAccount"
                 fieldProps={{
                   size: 'large',
-                  prefix: <UserOutlined />,
+                  prefix: <UserOutlined/>,
                 }}
                 placeholder={'Account: Maxwell'}
                 rules={[
@@ -176,7 +192,7 @@ const Login: React.FC = () => {
                 name="userPassword"
                 fieldProps={{
                   size: 'large',
-                  prefix: <LockOutlined />,
+                  prefix: <LockOutlined/>,
                 }}
                 placeholder={'Password: 12345678'}
                 rules={[

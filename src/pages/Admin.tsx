@@ -12,7 +12,6 @@ import {ProTable} from '@ant-design/pro-components';
 import {useRef} from 'react';
 import {deleteUser, searchUsers, update} from "@/services/ant-design-pro/api";
 import {Image, message} from "antd";
-import enUS from 'antd/lib/locale/en_US'; // 引入英文语言包
 import React, { useContext } from 'react';
 
 export const waitTimePromise = async (time: number = 100) => {
@@ -195,6 +194,7 @@ export default () => {
       expand: 'Collapse',
       inputPlaceholder: 'Please enter',
       selectPlaceholder: 'Please select',
+
     },
     alert: {
       clear: 'Clear',
@@ -218,6 +218,11 @@ export default () => {
       densityMiddle: 'Middle',
       densitySmall: 'Compact',
     },
+    editable:{
+      saveText: 'Save',
+      deleteText:'Delete',
+      cancelText:'Cancel'
+    },
   };
 
   const actionRef = useRef<ActionType>();
@@ -239,18 +244,20 @@ export default () => {
       }}
       editable={{
         type: 'multiple',
+        saveText: 'Save', // 确保editable里的文本也是英文
+        cancelText: 'Cancel',
+        deleteText: 'Delete',
         onSave: async (id, data) => {
           console.log('Saving:', id, data);
           try {
             const updatedList = await update(data);
-            if (updatedList){
+            if (updatedList) {
               actionRef.current?.reload();
-              message.success('edit successfully！');
+              message.success('Edit successfully!');
             }
-
           } catch (error) {
-            console.error('edit fail:', error);
-            message.error('edit fail, please try again later');
+            console.error('Edit failed:', error);
+            message.error('Edit failed, please try again later');
           }
         },
       }}

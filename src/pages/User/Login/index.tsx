@@ -153,7 +153,6 @@ const Login: React.FC = () => {
               marginTop: '20px', // 上边距（可选）
             }}
           >
-            Please log in via computer or disable "Prevent Tracking" in your browser.
           </div>
 
           <Tabs
